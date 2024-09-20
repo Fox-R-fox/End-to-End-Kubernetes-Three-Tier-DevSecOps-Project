@@ -1,4 +1,4 @@
-pipeline {
+this capipeline {
     agent any 
     tools {
         jdk 'jdk'
@@ -23,16 +23,19 @@ pipeline {
             }
         }
         stage('Sonarqube Analysis') {
-            steps {
-                dir('Application-Code/backend') {
-                    withSonarQubeEnv('sonar-server') {
-                        sh ''' $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=three-tier-backend \
-                        -Dsonar.projectKey=three-tier-backend '''
-                    }
-                }
+    steps {
+        dir('Application-Code/backend') {
+            withSonarQubeEnv('sonar-server') {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.projectKey=three-tier-backend \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://54.92.174.57:9000 \
+                -Dsonar.login=squ_4eac3a460dde3cd894d8dfd73fcc285d3efeeff5 '''
             }
         }
+    }
+}
+
         stage('Quality Check') {
             steps {
                 script {
