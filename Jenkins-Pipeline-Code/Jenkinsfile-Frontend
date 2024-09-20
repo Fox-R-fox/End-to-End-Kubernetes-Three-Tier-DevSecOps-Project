@@ -23,16 +23,19 @@ pipeline {
             }
         }
         stage('Sonarqube Analysis') {
-            steps {
-                dir('Application-Code/frontend') {
-                    withSonarQubeEnv('sonar-server') {
-                        sh ''' $SCANNER_HOME/bin/sonar-scanner \
-                        -Dsonar.projectName=three-tier-frontend \
-                        -Dsonar.projectKey=three-tier-frontend '''
-                    }
-                }
+        steps {
+        dir('Application-Code/frontend') {
+            withSonarQubeEnv('sonar-server') {
+                sh ''' $SCANNER_HOME/bin/sonar-scanner \
+                -Dsonar.projectKey=three-tier-frontend \
+                -Dsonar.sources=. \
+                -Dsonar.host.url=http://54.92.174.57:9000 \
+                -Dsonar.login=squ_4eac3a460dde3cd894d8dfd73fcc285d3efeeff5 '''
             }
         }
+    }
+}
+
         stage('Quality Check') {
             steps {
                 script {
